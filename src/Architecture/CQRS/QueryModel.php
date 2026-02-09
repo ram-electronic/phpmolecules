@@ -8,7 +8,7 @@ use Attribute;
 
 /**
  * Identifies a query model element in the context of CQRS, i.e. a (persistent) object optimized for read-access and
- * only only on the Q(uery) part of the architecture. The query model represents the current state or rather
+ * only used on the Q(uery) part of the architecture. The query model represents the current state or rather
  * materialized view after replaying the events published by the application.
  *
  * @author Christian Stettler
