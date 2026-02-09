@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PHPMolecules\DDD\Types;
 
 use Closure;
-use InvalidArgumentException;
 
 /**
  * Simple implementation of {@link Association} to effectively only define {@link equals()} and
