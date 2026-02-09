@@ -11,7 +11,6 @@ use Attribute;
  * {@link Adapter} code but only either expose or depend on functionality through {@link Port}s connecting the
  * application to the outside world.
  *
- * @author ???
  * @author Oliver Drotbohm
  * @link https://alistair.cockburn.us/hexagonal-architecture/ Hexagonal Architecture
  */
