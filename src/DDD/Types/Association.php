@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PHPMolecules\DDD\Types;
 
-use InvalidArgumentException;
-
 /**
  * An association to an {@link AggregateRoot}.
  *

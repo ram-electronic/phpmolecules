@@ -81,7 +81,7 @@ final class SimpleAssociation implements Association
      */
     public function pointsToSameAggregateAs(Association $other): bool
     {
-        return $this->getId() === $other->getId();
+        return $this->getId() == $other->getId();
     }
 
     /**
@@ -90,7 +90,7 @@ final class SimpleAssociation implements Association
      */
     public function pointsTo(Identifier $identifier): bool
     {
-        return $this->getId() === $identifier;
+        return $this->getId() == $identifier;
     }
 
     /**
