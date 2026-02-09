@@ -21,12 +21,14 @@
   },
   "autoload": {
     "psr-4": {
-      "PHPMolecules\\DDD\\": "src/DDD"
+      "PHPMolecules\\DDD\\": "src/DDD",
+      "PHPMolecules\\Architecture\\": "src/Architecture"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "PHPMolecules\\DDD\\": "tests/DDD"
+      "PHPMolecules\\DDD\\": "tests/DDD",
+      "PHPMolecules\\Architecture\\": "tests/Architecture"
     }
   }
 }
