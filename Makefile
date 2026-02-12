@@ -39,5 +39,5 @@ ci: phpstan phpcs test ## Run all CI checks
 shell: ## Open an interactive shell in the container
 	docker run --rm -it -v $(CURDIR):/app $(IMAGE_NAME) bash
 
-clean: ## Remove vendor directory and composer.lock
-	$(DOCKER_RUN) rm -rf vendor composer.lock
+clean: ## Remove vendor directory
+	$(DOCKER_RUN) rm -rf vendor

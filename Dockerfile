@@ -22,7 +22,7 @@ ARG GROUP_ID=1000
 RUN usermod --uid $USER_ID $USER_NAME && groupmod --gid $GROUP_ID $USER_GROUP
 
 # Set default user
-USER www-data
+USER $USER_NAME
 
 # Default command
 CMD ["php", "-v"]
