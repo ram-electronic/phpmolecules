@@ -7,8 +7,8 @@ IMAGE_NAME=phpmolecules-dev
 USER_ID=$(shell id -u)
 GROUP_ID=$(shell id -g)
 
-# Docker run command with volume mapping and user configuration
-DOCKER_RUN=docker run --rm -v $(CURDIR):/app --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID) $(IMAGE_NAME)
+# Docker run command with volume mapping
+DOCKER_RUN=docker run --rm -v $(CURDIR):/app $(IMAGE_NAME)
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -37,7 +37,7 @@ phpcs: ## Run PHP CodeSniffer
 ci: phpstan phpcs test ## Run all CI checks (phpstan, phpcs, test)
 
 shell: ## Open an interactive shell in the container
-	docker run --rm -it -v $(CURDIR):/app --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID) $(IMAGE_NAME) bash
+	docker run --rm -it -v $(CURDIR):/app $(IMAGE_NAME) bash
 
 clean: ## Remove vendor directory and composer.lock
 	$(DOCKER_RUN) rm -rf vendor composer.lock
