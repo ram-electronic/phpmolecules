@@ -67,9 +67,6 @@ final class SimpleAssociation implements Association
         return ($this->identifier)();
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return (string) $this->getId();
@@ -85,7 +82,6 @@ final class SimpleAssociation implements Association
     }
 
     /**
-     * @param ID $identifier
      * @return bool
      */
     public function pointsTo(Identifier $identifier): bool
@@ -94,7 +90,6 @@ final class SimpleAssociation implements Association
     }
 
     /**
-     * @param AggregateRoot $aggregate must not be null.
      * @return bool
      */
     public function pointsToAggregate(AggregateRoot $aggregate): bool

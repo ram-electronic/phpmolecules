@@ -20,6 +20,7 @@ namespace PHPMolecules\DDD\Types;
  *       Reference (Evans) - Entities
  * @link https://scabl.blogspot.com/2015/04/aeddd-9.html John Sullivan - Advancing Enterprise DDD - Reinstating
  *       the Aggregate
+ *
  * @template T of AggregateRoot
  * @template ID of Identifier
  * @extends Identifiable<ID>
