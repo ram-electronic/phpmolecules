@@ -39,6 +39,10 @@ echo ""
 
 echo "5. Testing user permissions..."
 USER_INFO=$(docker run --rm -v $(pwd):/app $IMAGE_NAME id -u)
+if ! [[ "$USER_INFO" =~ ^[0-9]+$ ]]; then
+    echo "✗ Failed to get user ID from container"
+    exit 1
+fi
 if [ "$USER_INFO" -eq 0 ]; then
     echo "✗ Container is running as root (UID 0)"
     exit 1
