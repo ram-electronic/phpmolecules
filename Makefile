@@ -34,7 +34,7 @@ phpstan: ## Run PHPStan static analysis
 phpcs: ## Run PHP CodeSniffer
 	$(DOCKER_RUN) ./vendor/bin/phpcs
 
-ci: phpstan phpcs test ## Run all CI checks (phpstan, phpcs, test)
+ci: phpstan phpcs test ## Run all CI checks
 
 shell: ## Open an interactive shell in the container
 	docker run --rm -it -v $(CURDIR):/app $(IMAGE_NAME) bash
