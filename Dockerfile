@@ -6,14 +6,23 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /app
 
-# Install git (required by composer for some dependencies)
+# Install git and unzip (required by composer for some dependencies)
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Set composer to allow running as root
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Arguments for user configuration
+ARG USER_NAME=www-data
+ARG USER_GROUP=www-data
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+# Change www-data user's uid and www-data group's gid
+RUN usermod --uid $USER_ID $USER_NAME && groupmod --gid $GROUP_ID $USER_GROUP
+
+# Set default user
+USER www-data
 
 # Default command
 CMD ["php", "-v"]

@@ -5,7 +5,6 @@ This repository includes a Docker-based development environment for running test
 ## Prerequisites
 
 - Docker
-- Docker Compose
 
 ## Quick Start
 
@@ -35,28 +34,28 @@ make phpcs     # Code style check
 make shell
 ```
 
-### Using Docker Compose directly
+### Using Docker directly
 
-Alternatively, you can use docker compose commands directly:
+Alternatively, you can use docker commands directly:
 
 ```bash
 # Build the container
-docker compose build
+docker build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -t phpmolecules-dev .
 
 # Install dependencies
-docker compose run --rm php composer install
+docker run --rm -v $(pwd):/app phpmolecules-dev composer install
 
 # Run tests
-docker compose run --rm php ./vendor/bin/phpunit
+docker run --rm -v $(pwd):/app phpmolecules-dev ./vendor/bin/phpunit
 
 # Run static analysis
-docker compose run --rm php ./vendor/bin/phpstan analyze --no-interaction --no-ansi --no-progress
+docker run --rm -v $(pwd):/app phpmolecules-dev ./vendor/bin/phpstan analyze --no-interaction --no-ansi --no-progress
 
 # Run code sniffer
-docker compose run --rm php ./vendor/bin/phpcs
+docker run --rm -v $(pwd):/app phpmolecules-dev ./vendor/bin/phpcs
 
 # Interactive shell
-docker compose run --rm php bash
+docker run --rm -it -v $(pwd):/app phpmolecules-dev bash
 ```
 
 ## What's included
@@ -65,9 +64,18 @@ docker compose run --rm php bash
 - **Composer** (latest version)
 - **Git** (required by composer)
 
+## User Permissions
+
+The container runs as a non-root user (www-data) with UID and GID matching your host user. This is configured at build time using build arguments:
+
+- `USER_ID`: Set to your user ID (default: 1000)
+- `GROUP_ID`: Set to your group ID (default: 1000)
+
+The Makefile automatically passes your current user and group IDs, ensuring that files created by the container have the correct ownership.
+
 ## Volume Mapping
 
-The entire project directory is mapped to `/app` inside the container, so any changes you make on your host machine are immediately reflected in the container.
+The project directory is mapped to `/app` inside the container using the `-v $(pwd):/app` flag, so any changes you make on your host machine are immediately reflected in the container.
 
 ## CI Tools
 
@@ -77,11 +85,6 @@ The container supports all the tools used in the GitHub CI workflow:
 - PHPStan (static analysis)
 - PHP_CodeSniffer (code style)
 
-## Notes
-
-- The git warning about "dubious ownership" that appears when running composer is expected and can be safely ignored. This is due to how Docker volume mounting works.
-- If you're having issues with composer install due to GitHub API rate limits, you can try using `--prefer-source` flag or authenticate composer with a GitHub token.
-
 ## Troubleshooting
 
 ### Composer authentication errors
@@ -90,10 +93,10 @@ If you encounter GitHub API authentication errors during `composer install`, you
 
 1. Authenticate composer with a GitHub token:
    ```bash
-   docker compose run --rm php composer config -g github-oauth.github.com YOUR_GITHUB_TOKEN
+   docker run --rm -v $(pwd):/app phpmolecules-dev composer config -g github-oauth.github.com YOUR_GITHUB_TOKEN
    ```
 
 2. Or use source repositories instead of dist:
    ```bash
-   docker compose run --rm php composer install --prefer-source
+   docker run --rm -v $(pwd):/app phpmolecules-dev composer install --prefer-source
    ```

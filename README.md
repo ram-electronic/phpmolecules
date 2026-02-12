@@ -49,7 +49,7 @@ composer require xmolecules/phpmolecules
 
 ## Development
 
-For local development, this project includes a Docker-based development environment with PHP 8.4 and Composer.
+For local development, this project includes a Docker-based development environment.
 
 See [DOCKER.md](DOCKER.md) for detailed instructions on using the Docker development environment.
 

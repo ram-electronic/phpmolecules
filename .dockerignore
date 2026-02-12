@@ -1,7 +1,4 @@
 .git
 .gitignore
-vendor/
-composer.lock
-.phpunit.result.cache
-*.md
+README.md
 LICENSE

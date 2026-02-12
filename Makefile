@@ -1,5 +1,15 @@
 .PHONY: help build install test phpstan phpcs shell clean
 
+# Docker image name
+IMAGE_NAME=phpmolecules-dev
+
+# Get current user/group IDs
+USER_ID=$(shell id -u)
+GROUP_ID=$(shell id -g)
+
+# Docker run command with volume mapping and user configuration
+DOCKER_RUN=docker run --rm -v $(CURDIR):/app --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID) $(IMAGE_NAME)
+
 help: ## Show this help message
 	@echo 'Usage: make [target]'
 	@echo ''
@@ -7,30 +17,27 @@ help: ## Show this help message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 build: ## Build the Docker container
-	docker compose build
+	docker build --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID) -t $(IMAGE_NAME) .
 
 install: ## Install composer dependencies
-	docker compose run --rm php composer install
+	$(DOCKER_RUN) composer install
 
 update: ## Update composer dependencies
-	docker compose run --rm php composer update
+	$(DOCKER_RUN) composer update
 
 test: ## Run PHPUnit tests
-	docker compose run --rm php ./vendor/bin/phpunit
+	$(DOCKER_RUN) ./vendor/bin/phpunit
 
 phpstan: ## Run PHPStan static analysis
-	docker compose run --rm php ./vendor/bin/phpstan analyze --no-interaction --no-ansi --no-progress
+	$(DOCKER_RUN) ./vendor/bin/phpstan analyze --no-interaction --no-ansi --no-progress
 
 phpcs: ## Run PHP CodeSniffer
-	docker compose run --rm php ./vendor/bin/phpcs
+	$(DOCKER_RUN) ./vendor/bin/phpcs
 
-ci: ## Run all CI checks (phpstan, phpcs, test)
-	docker compose run --rm php ./vendor/bin/phpstan analyze --no-interaction --no-ansi --no-progress
-	docker compose run --rm php ./vendor/bin/phpcs
-	docker compose run --rm php ./vendor/bin/phpunit
+ci: phpstan phpcs test ## Run all CI checks (phpstan, phpcs, test)
 
 shell: ## Open an interactive shell in the container
-	docker compose run --rm php bash
+	docker run --rm -it -v $(CURDIR):/app --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID) $(IMAGE_NAME) bash
 
 clean: ## Remove vendor directory and composer.lock
-	docker compose run --rm php rm -rf vendor composer.lock
+	$(DOCKER_RUN) rm -rf vendor composer.lock

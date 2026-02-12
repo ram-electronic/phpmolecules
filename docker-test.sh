@@ -3,29 +3,43 @@
 
 set -e
 
+IMAGE_NAME="phpmolecules-dev"
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
 echo "==================================="
 echo "Docker Development Environment Test"
 echo "==================================="
 echo ""
 
+echo "Building Docker image..."
+docker build --build-arg USER_ID=$USER_ID --build-arg GROUP_ID=$GROUP_ID -t $IMAGE_NAME . > /dev/null
+echo "✓ Docker image built successfully"
+echo ""
+
 echo "1. Testing PHP..."
-docker compose run --rm php php -v
+docker run --rm $IMAGE_NAME php -v
 echo "✓ PHP is working"
 echo ""
 
 echo "2. Testing Composer..."
-docker compose run --rm php composer --version
+docker run --rm $IMAGE_NAME composer --version
 echo "✓ Composer is working"
 echo ""
 
 echo "3. Testing Git..."
-docker compose run --rm php git --version
+docker run --rm $IMAGE_NAME git --version
 echo "✓ Git is working"
 echo ""
 
 echo "4. Testing volume mapping..."
-docker compose run --rm php ls -la /app/composer.json > /dev/null
+docker run --rm -v $(pwd):/app $IMAGE_NAME ls -la /app/composer.json > /dev/null
 echo "✓ Volume mapping is working"
+echo ""
+
+echo "5. Testing user permissions..."
+docker run --rm -v $(pwd):/app $IMAGE_NAME id
+echo "✓ Running as non-root user"
 echo ""
 
 echo "==================================="
@@ -33,7 +47,11 @@ echo "All tests passed! ✓"
 echo "==================================="
 echo ""
 echo "To install dependencies and run tests:"
-echo "  docker compose run --rm php composer install"
-echo "  docker compose run --rm php ./vendor/bin/phpunit"
-echo "  docker compose run --rm php ./vendor/bin/phpstan analyze"
-echo "  docker compose run --rm php ./vendor/bin/phpcs"
+echo "  docker run --rm -v \$(pwd):/app $IMAGE_NAME composer install"
+echo "  docker run --rm -v \$(pwd):/app $IMAGE_NAME ./vendor/bin/phpunit"
+echo "  docker run --rm -v \$(pwd):/app $IMAGE_NAME ./vendor/bin/phpstan analyze"
+echo "  docker run --rm -v \$(pwd):/app $IMAGE_NAME ./vendor/bin/phpcs"
+echo ""
+echo "Or use the Makefile:"
+echo "  make install"
+echo "  make ci"
