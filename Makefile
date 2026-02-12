@@ -25,14 +25,9 @@ phpcs: ## Run PHP CodeSniffer
 	docker compose run --rm php ./vendor/bin/phpcs
 
 ci: ## Run all CI checks (phpstan, phpcs, test)
-	@echo "Running PHPStan..."
-	@make phpstan
-	@echo ""
-	@echo "Running PHP CodeSniffer..."
-	@make phpcs
-	@echo ""
-	@echo "Running PHPUnit tests..."
-	@make test
+	docker compose run --rm php ./vendor/bin/phpstan analyze --no-interaction --no-ansi --no-progress
+	docker compose run --rm php ./vendor/bin/phpcs
+	docker compose run --rm php ./vendor/bin/phpunit
 
 shell: ## Open an interactive shell in the container
 	docker compose run --rm php bash
