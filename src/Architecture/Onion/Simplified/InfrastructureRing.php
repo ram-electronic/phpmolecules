@@ -8,7 +8,7 @@ use Attribute;
 
 /**
  * Identifies the {@link InfrastructureRing} in an onion architecture. The infrastructure ring is the technical
- * implementation of the interfaces defined in the inner layers, such as JPA entities or concrete repository
+ * implementation of the interfaces defined in the inner layers, such as Doctrine ORM entities or concrete repository
  * implementations. It takes care of handling external requests and communication with other systems.
  *
  * @author Christian Stettler
