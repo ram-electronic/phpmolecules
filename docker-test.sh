@@ -38,8 +38,12 @@ echo "✓ Volume mapping is working"
 echo ""
 
 echo "5. Testing user permissions..."
-docker run --rm -v $(pwd):/app $IMAGE_NAME id
-echo "✓ Running as non-root user"
+USER_INFO=$(docker run --rm -v $(pwd):/app $IMAGE_NAME id -u)
+if [ "$USER_INFO" -eq 0 ]; then
+    echo "✗ Container is running as root (UID 0)"
+    exit 1
+fi
+echo "✓ Running as non-root user (UID: $USER_INFO)"
 echo ""
 
 echo "==================================="
