@@ -13,6 +13,7 @@ use Closure;
  * @author Oliver Drotbohm
  * @see Association::forId()
  * @see Association::forAggregate()
+ *
  * @template T of AggregateRoot
  * @template ID of Identifier
  * @implements Association<T, ID>
@@ -61,7 +62,7 @@ final class SimpleAssociation implements Association
     /**
      * @return ID
      */
-    public function getId()
+    public function getId(): Identifier
     {
         return ($this->identifier)();
     }

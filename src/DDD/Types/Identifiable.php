@@ -11,7 +11,7 @@ namespace PHPMolecules\DDD\Types;
  *
  * @link https://github.com/xmolecules/jmolecules/blob/main/jmolecules-ddd/src/main/java/org/jmolecules/ddd/types/Identifiable.java jmolecules - Identifiable.java
  *
- * @template ID
+ * @template ID of Identifier
  */
 interface Identifiable
 {
@@ -20,5 +20,5 @@ interface Identifiable
      *
      * @return ID
      */
-    public function getId();
+    public function getId(): Identifier;
 }
