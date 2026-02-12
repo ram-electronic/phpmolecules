@@ -74,7 +74,6 @@ final class SimpleAssociation implements Association
 
     /**
      * @param Association<mixed, ID> $other must not be null.
-     * @return bool
      */
     public function pointsToSameAggregateAs(Association $other): bool
     {
