@@ -47,6 +47,22 @@ To use phpMolecules in your project just install it with Composer from Packagist
 composer require xmolecules/phpmolecules
 ```
 
+## Development
+
+For local development, this project includes a Dockerfile.
+
+Quick start:
+```bash
+# Build and test the environment
+./docker-test.sh
+
+# Install dependencies
+make install
+
+# Run all CI checks
+make ci
+```
+
 ## Release Instructions
 
 Create a new Git version tag and push it:
