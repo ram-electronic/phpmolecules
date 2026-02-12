@@ -15,6 +15,8 @@ namespace PHPMolecules\DDD\Types;
  * @author Oliver Drotbohm
  * @link https://scabl.blogspot.com/2015/04/aeddd-9.html John Sullivan - Advancing Enterprise DDD - Reinstating
  *       the Aggregate
+ * @link https://github.com/xmolecules/jmolecules/blob/main/jmolecules-ddd/src/main/java/org/jmolecules/ddd/types/Association.java jmolecules - Association.java
+ *
  * @template T of AggregateRoot
  * @template ID of Identifier
  * @extends Identifiable<ID>
