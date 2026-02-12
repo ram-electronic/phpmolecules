@@ -47,6 +47,24 @@ To use phpMolecules in your project just install it with Composer from Packagist
 composer require xmolecules/phpmolecules
 ```
 
+## Development
+
+For local development, this project includes a Docker-based development environment with PHP 8.4 and Composer.
+
+See [DOCKER.md](DOCKER.md) for detailed instructions on using the Docker development environment.
+
+Quick start:
+```bash
+# Build and test the environment
+./docker-test.sh
+
+# Install dependencies
+make install
+
+# Run all CI checks
+make ci
+```
+
 ## Release Instructions
 
 Create a new Git version tag and push it:
