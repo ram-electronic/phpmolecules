@@ -11,6 +11,9 @@ use Closure;
  * {@link hashCode()} on {@link Association}'s static factory methods.
  *
  * @author Oliver Drotbohm
+ *
+ * @link https://github.com/xmolecules/jmolecules/blob/main/jmolecules-ddd/src/main/java/org/jmolecules/ddd/types/SimpleAssociation.java jmolecules - SimpleAssociation.java
+ *
  * @see Association::forId()
  * @see Association::forAggregate()
  *
